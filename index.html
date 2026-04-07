@@ -41,6 +41,13 @@
         }
         @font-face {
             font-family: 'Eighties Comeback';
+            src: url('fonts/EightiesComback _Italic_VAR-VF.ttf') format('truetype');
+            font-weight: 100 900;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Eighties Comeback';
             src: url('fonts/EightiesComebackIt-Regular.otf') format('opentype');
             font-weight: 400;
             font-style: italic;
@@ -297,7 +304,7 @@
             color: var(--pink);
         }
 
-        .hero__title { margin-bottom: 2rem; }
+        .hero__title { margin-bottom: 2rem; text-transform: none; }
 
         .hero__title .line { display: block; }
 
@@ -683,17 +690,7 @@
             width: 100%;
         }
 
-        /* Built on Purpose animation */
-        .built-on-purpose {
-            opacity: 0;
-            transform: rotate(-1deg) translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .built-on-purpose.revealed {
-            opacity: 1;
-            transform: rotate(-1deg) translateY(0);
-        }
+        /* Built on Purpose — uses scrawl-in animation */
 
         /* Scrawl-in animation for Join Us */
         .scrawl-in {
@@ -2030,8 +2027,6 @@
                 padding-left: 0 !important;
             }
         }
-    .size {
-}
     </style>
 </head>
 <body>
@@ -2053,9 +2048,9 @@
                 <div>
                     <span class="eyebrow hero__eyebrow">A One-Day Personal Brand Intensive</span>
                     <h1 class="hero__title">
-                        <span class="line">Be <span class="brush-solid" style="color: #000; font-size: 1.15em; transform: rotate(-1deg);">Seen,</span></span>
-                        <span class="line">Heard <span class="pink">&</span></span>
-                        <span class="line size"><span class="brush-solid" style="color: #F1093A; font-size: 1.15em; transform: rotate(-1deg); text-transform: lowercase;">paid.</span></span>
+                        <span class="line">Be <span class="brush-solid" style="color: var(--pink); font-size: 1.15em; transform: rotate(-1deg);">seen,</span></span>
+                        <span class="line"><span style="font-style: italic; font-weight: 200; text-transform: lowercase;">heard</span> <span class="pink">&</span></span>
+                        <span class="line"><span class="brush-solid" style="color: #F1093A; font-size: 1.55em; transform: rotate(-1deg); text-transform: lowercase;">PAID.</span></span>
                     </h1>
                     <p class="hero__subtitle">When your brand is strong enough, you render your competitors irrelevant.</p>
                     <div class="hero__meta">
@@ -2348,7 +2343,7 @@
         <div class="container">
             <div class="offer__header reveal">
                 <span class="eyebrow" style="display: block; margin-bottom: 1rem; opacity: 0.7;">Introducing</span>
-                <h2><span style="font-family: 'League Spartan', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 900; color: #000; font-size: 70px;">Unforgettable</span> <span class="brush-solid" style="font-size: 2.72em; display: inline-block; transform: rotate(-1deg);">Brand</span></h2>
+                <h2><span style="font-family: 'League Spartan', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 900; color: #000; font-size: 70px;">Unforgettable</span> <span class="brush-solid" style="font-size: 2.72em; display: inline-block; transform: rotate(-1deg); color: #000;">Brand</span></h2>
                 <p class="intro">The personal brand intensive to be seen, heard, and paid. A one-day brand intensive for women who are done being overlooked and ready to become unforgettable.</p>
                 <p class="urgency">If you're the town's best kept secret, but nobody outside your circle has heard of you &mdash; it's time.</p>
             </div>
@@ -2383,7 +2378,7 @@
             <div class="grid-2">
                 <div class="reveal">
                     <span class="eyebrow" style="color: var(--pink); display: block; margin-bottom: 1rem;">Built on purpose</span>
-                    <h2><span style="font-size: 0.4em; display: block; margin-bottom: 0.5rem; letter-spacing: 0.05em;">The Brands We Remember Were</span> <span class="brush-solid built-on-purpose" style="color: #000; font-size: 1.15em; transform: rotate(-1deg);">Built on Purpose</span></h2>
+                    <h2><span style="font-size: 0.4em; display: block; margin-bottom: 0.5rem; letter-spacing: 0.05em;">The Brands We Remember Were</span> <span class="brush-solid scrawl-in built-on-purpose" style="color: var(--pink); font-size: 1.15em; transform: rotate(-1deg);">Built on Purpose</span></h2>
                     <p>Most women in business have been winging it with their personal brand for years, while quietly knowing it's the thing holding them back from the rates, the visibility, and the opportunities that they should have already earned.</p>
                     <p>Together, we're closing that gap in just one day.</p>
                     <p>You're in the right spot if you're already in business, or you've had a solid corporate career that you're ready to leverage. You know exactly how good you are, with clients and colleagues who keep coming back for more.</p>
@@ -2727,12 +2722,11 @@
             typewriterObserver.observe(typewriterWrapper);
         }
 
-        // Scrawl-in for Join Us
-        const scrawlEl = document.querySelector('.scrawl-in');
-        if (scrawlEl) {
-            const scrawlTarget = scrawlEl.closest('.join__content') || scrawlEl.parentElement;
-            const scrawlObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+        // Scrawl-in animation (Join Us + Built on Purpose)
+        document.querySelectorAll('.scrawl-in').forEach(function(scrawlEl) {
+            var scrawlTarget = scrawlEl.closest('.join__content') || scrawlEl.closest('.reveal') || scrawlEl.parentElement;
+            var scrawlObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         scrawlEl.classList.add('scrawled');
                         scrawlObserver.disconnect();
@@ -2740,21 +2734,7 @@
                 });
             }, { threshold: 0.2 });
             scrawlObserver.observe(scrawlTarget);
-        }
-
-        // Built on Purpose animation
-        const bopEl = document.querySelector('.built-on-purpose');
-        if (bopEl) {
-            const bopObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        bopEl.classList.add('revealed');
-                        bopObserver.disconnect();
-                    }
-                });
-            }, { threshold: 0.3 });
-            bopObserver.observe(bopEl);
-        }
+        });
 
         // Underline animate on "In"
         const underlineEl = document.querySelector('.underline-animate');
