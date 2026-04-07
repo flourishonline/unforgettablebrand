@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'EightiesComeback It';
+    src: url('EightiesComebackIt-SemiBold.woff2') format('woff2'),
+        url('EightiesComebackIt-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'EightiesComeback It';
+    src: url('EightiesComebackIt-Light.woff2') format('woff2'),
+        url('EightiesComebackIt-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'EightiesComeback It';
+    src: url('EightiesComebackIt-BlackCond.woff2') format('woff2'),
+        url('EightiesComebackIt-BlackCond.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
