@@ -1641,6 +1641,59 @@
         .footer__cta-block {
             text-align: center;
             padding: 5rem 3rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer__cta-block .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .photo-scatter__photos {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .photo-scatter__photo {
+            position: absolute;
+            width: 200px;
+            height: 260px;
+            border: 3px solid rgba(250,246,241,0.1);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.3);
+            opacity: 0;
+            transform: translateY(80px) rotate(0deg) scale(0.6);
+            transition: none;
+            overflow: hidden;
+        }
+
+        .photo-scatter__photo:nth-child(1) { background: linear-gradient(160deg, #F1093A 0%, #FF3DD4 100%); }
+        .photo-scatter__photo:nth-child(2) { background: linear-gradient(140deg, #03889B 0%, #F1093A 100%); }
+        .photo-scatter__photo:nth-child(3) { background: linear-gradient(200deg, #FF3DD4 0%, #03889B 100%); }
+        .photo-scatter__photo:nth-child(4) { background: linear-gradient(120deg, #FAF6F1 0%, #FF3DD4 60%); }
+        .photo-scatter__photo:nth-child(5) { background: linear-gradient(180deg, #F1093A 0%, #03889B 100%); }
+        .photo-scatter__photo:nth-child(6) { background: linear-gradient(150deg, #03889B 0%, #FAF6F1 100%); }
+        .photo-scatter__photo:nth-child(7) { background: linear-gradient(170deg, #FF3DD4 0%, #F1093A 100%); }
+
+        .photo-scatter__photo.landed {
+            opacity: 1;
+            transform: var(--land-transform);
+            transition: opacity 0.15s ease, transform 0.45s cubic-bezier(0.22, 0.68, 0.35, 1.15);
+        }
+
+        @media (max-width: 968px) {
+            .footer__cta-block { min-height: 400px; }
+            .photo-scatter__photo { width: 150px; height: 200px; }
+        }
+
+        @media (max-width: 600px) {
+            .footer__cta-block { min-height: 320px; }
+            .photo-scatter__photo { width: 120px; height: 160px; }
         }
 
         .footer__title {
@@ -1652,6 +1705,7 @@
             letter-spacing: -0.02em;
             font-style: italic;
             margin-bottom: 3rem;
+            text-shadow: 0 4px 40px rgba(0,0,0,0.6), 0 2px 10px rgba(0,0,0,0.4);
         }
 
         .footer__event-details {
@@ -1976,6 +2030,8 @@
                 padding-left: 0 !important;
             }
         }
+    .size {
+}
     </style>
 </head>
 <body>
@@ -1997,9 +2053,9 @@
                 <div>
                     <span class="eyebrow hero__eyebrow">A One-Day Personal Brand Intensive</span>
                     <h1 class="hero__title">
-                        <span class="line">Be <span class="brush-solid" style="color: #03889B; font-size: 1.15em; transform: rotate(-1deg);">Seen,</span></span>
+                        <span class="line">Be <span class="brush-solid" style="color: #000; font-size: 1.15em; transform: rotate(-1deg);">Seen,</span></span>
                         <span class="line">Heard <span class="pink">&</span></span>
-                        <span class="line"><span class="brush-solid" style="color: #F1093A; font-size: 1.15em; transform: rotate(-1deg);">Paid.</span></span>
+                        <span class="line size"><span class="brush-solid" style="color: #F1093A; font-size: 1.15em; transform: rotate(-1deg); text-transform: lowercase;">paid.</span></span>
                     </h1>
                     <p class="hero__subtitle">When your brand is strong enough, you render your competitors irrelevant.</p>
                     <div class="hero__meta">
@@ -2580,6 +2636,15 @@
             </div>
         </div>
         <div class="footer__cta-block">
+            <div class="photo-scatter__photos">
+                <div class="photo-scatter__photo" style="--land-transform: translate(3%, 10%) rotate(-14deg);"></div>
+                <div class="photo-scatter__photo" style="--land-transform: translate(68%, 12%) rotate(9deg);"></div>
+                <div class="photo-scatter__photo" style="--land-transform: translate(20%, 50%) rotate(-6deg);"></div>
+                <div class="photo-scatter__photo" style="--land-transform: translate(75%, 48%) rotate(12deg);"></div>
+                <div class="photo-scatter__photo" style="--land-transform: translate(42%, 3%) rotate(-3deg);"></div>
+                <div class="photo-scatter__photo" style="--land-transform: translate(8%, 60%) rotate(10deg);"></div>
+                <div class="photo-scatter__photo" style="--land-transform: translate(55%, 58%) rotate(-9deg);"></div>
+            </div>
             <div class="container">
                 <h2 class="footer__title">Unforgettable<br>Brand</h2>
                 <div class="footer__event-details">
@@ -2703,6 +2768,25 @@
                 });
             }, { threshold: 0.5 });
             underlineObserver.observe(underlineEl);
+        }
+
+        // Footer photo scatter animation
+        const scatterContainer = document.querySelector('.footer__cta-block');
+        if (scatterContainer) {
+            const photos = scatterContainer.querySelectorAll('.photo-scatter__photo');
+            const scatterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        scatterObserver.disconnect();
+                        photos.forEach((photo, i) => {
+                            setTimeout(() => {
+                                photo.classList.add('landed');
+                            }, 150 + i * 180);
+                        });
+                    }
+                });
+            }, { threshold: 0.2 });
+            scatterObserver.observe(scatterContainer);
         }
 
         // Volume turn-up animation
