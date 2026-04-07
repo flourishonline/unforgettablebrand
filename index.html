@@ -1960,9 +1960,11 @@
                 gap: 2rem !important;
             }
 
-            /* Real leaders — scale headline */
+            /* Consistent heading sizes on tablet */
+            h2 { font-size: clamp(3.5rem, 9vw, 7rem); }
+
             .real-leaders__headline {
-                font-size: clamp(3rem, 8vw, 6rem);
+                font-size: clamp(3.5rem, 9vw, 6rem);
             }
 
             /* Join Us — scale down */
@@ -1983,13 +1985,44 @@
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 3rem; }
+            h1 { font-size: clamp(3.5rem, 12vw, 5rem); }
+            h2 { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+            h3 { font-size: clamp(1.4rem, 4vw, 2rem); }
+
             .btn { display: block; text-align: center; }
             .hero__meta { flex-direction: column; gap: 1rem; }
+
+            /* Section headings with inline large sizes */
+            .real-leaders__headline {
+                font-size: clamp(2.5rem, 10vw, 4rem) !important;
+            }
+
+            /* Who Are We */
+            .who-we-are__header h2 {
+                font-size: clamp(4rem, 14vw, 7rem) !important;
+            }
 
             /* Own Our Greatness text */
             [style*="font-size: 40px"] {
                 font-size: 26px !important;
+            }
+
+            /* Offer heading — Unforgettable */
+            [style*="font-size: 70px"] {
+                font-size: 40px !important;
+            }
+
+            /* Closing fabulous */
+            .closing-finale__bottom .brush-solid[style*="font-size: 100px"] {
+                font-size: 50px !important;
+            }
+            .closing-finale__bottom p[style*="font-size: 40px"] {
+                font-size: 22px !important;
+            }
+
+            /* Footer title */
+            .footer__title {
+                font-size: clamp(3.5rem, 14vw, 8rem) !important;
             }
 
             /* Real leaders portraits — tighter on small screens */
@@ -2007,19 +2040,6 @@
             /* Join Us — scale further */
             .scrawl-in {
                 font-size: 2em !important;
-            }
-
-            /* Closing fabulous */
-            .closing-finale__bottom .brush-solid[style*="font-size: 100px"] {
-                font-size: 44px !important;
-            }
-            .closing-finale__bottom p[style*="font-size: 40px"] {
-                font-size: 22px !important;
-            }
-
-            /* Footer title */
-            .footer__title {
-                font-size: clamp(3.5rem, 14vw, 8rem);
             }
 
             /* Day covers dropdown padding */
